@@ -44,13 +44,13 @@ async function getDrafts(req, res) {
         res.json(response.data);
     } catch (error) {
         console.log(error);
-        return error;
+        res.send(error);
     }
 }
 
 async function readMail(req, res) {
     try {
-        const url = `https://gmail.googleapis.com/gmail/v1/users/sid.cd.varma@gmail.com/messages/${req.params.messageId}`;
+        const url = `https://gmail.googleapis.com/gmail/v1/users/${req.params.email}/messages/${req.params.messageId}`;
         const { token } = await oAuth2Client.getAccessToken();
         const config = generateConfig(url, token);
         const response = await axios(config);
@@ -58,6 +58,7 @@ async function readMail(req, res) {
         let data = await response.data;
         res.json(data);
     } catch (error) {
+        console.log(error);
         res.send(error);
     }
 }
@@ -74,7 +75,7 @@ async function sendMail(req, res) {
         });
 
         const mailOptions = {
-            ...CONSTANTS.mailoptions,
+            ...CONSTANTS.mailOptions,
             text: "The Gmail API with NodeJS works",
         };
 
@@ -86,10 +87,28 @@ async function sendMail(req, res) {
     }
 }
 
+async function watchEmail(req, res) {
+    try {
+        const gmail = google.gmail({ version: 'v1', auth });
+        const watchRequest = {
+            // See full request options: https://developers.google.com/gmail/api/guides/push
+            topicName: 'projects/myproject/topics/new_email',
+            labelIds: ['INBOX'],
+        };
+
+        // Watch the message
+        const res = await gmail.users.watch(watchRequest);
+        console.log(res);
+    } catch (error) {
+        console.log(error);
+        res.send(error);
+    }
+}
+
 module.exports = {
     getUser,
-    sendMail,
     getDrafts,
-    readMail,
     sendMail,
+    readMail,
+    watchEmail,
 };

@@ -8,7 +8,7 @@ const auth = {
     refreshToken: process.env.REFRESH_TOKEN,
 };
 
-const mailoptions = {
+const mailOptions = {
     from: "Guilherme <guilherme.urenha@gmail.com>",
     to: "guilherme.urenha@gmail.com",
     subject: "Gmail API NodeJS",
@@ -16,5 +16,5 @@ const mailoptions = {
 
 module.exports = {
     auth,
-    mailoptions,
+    mailOptions: mailOptions,
 };
