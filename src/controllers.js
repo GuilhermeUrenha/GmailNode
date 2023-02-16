@@ -89,16 +89,11 @@ async function sendMail(req, res) {
 
 async function watchEmail(req, res) {
     try {
-        const gmail = google.gmail({ version: 'v1', auth });
-        const watchRequest = {
-            // See full request options: https://developers.google.com/gmail/api/guides/push
-            topicName: 'projects/myproject/topics/new_email',
-            labelIds: ['INBOX'],
-        };
+        //const accessToken = await oAuth2Client.getAccessToken();
+        //const url = `https://gmail.googleapis.com/gmail/v1/users/${req.params.email}/watch`;
 
-        // Watch the message
-        const res = await gmail.users.watch(watchRequest);
-        console.log(res);
+        //const res = await gmail.users.watch(watchRequest);
+        //console.log(res);
     } catch (error) {
         console.log(error);
         res.send(error);
@@ -110,5 +105,4 @@ module.exports = {
     getDrafts,
     sendMail,
     readMail,
-    watchEmail,
 };

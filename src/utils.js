@@ -3,7 +3,7 @@ const generateConfig = (url, accessToken) => {
         method: "get",
         url: url,
         headers: {
-            Authorization: `Bearer ${accessToken} `,
+            Authorization: `Bearer ${accessToken}`,
             "Content-type": "application/json",
         },
     };

@@ -9,7 +9,6 @@ app.listen(process.env.PORT, () => {
 });
 
 app.get("/", async (req, res) => {
-    // const result=await sendMail();
     res.send("Welcome to Gmail API with NodeJS");
 });
 
